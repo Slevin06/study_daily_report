@@ -8,6 +8,8 @@ use App\Http\Requests\DailyreportValidate;
 //use http\Env\Request;
 use Illuminate\Http\Request;
 
+use App\Models\SearchDailyReport;
+
 class DailyreportService
 {
     private $dailyreport;
@@ -33,33 +35,36 @@ class DailyreportService
         $contents = $attributes['contents'] ? $attributes['contents'] : "";
 
 //        if (empty($id) && empty($date) && empty($contents)) return;
-        if (isset($id) && !empty($id)) $query->where('id', $id);
-
-        if (isset($fromDate) && !empty($fromDate) && isset($toDate) && !empty($toDate)) {
-            $query->whereBetween('date', [$fromDate, $toDate]);
-        }
-        if (isset($fromDate) && !empty($fromDate) && empty($toDate) && $toDate === "") {
-            $query->where('date', '>=', $fromDate);
-        }
-        if (empty($fromDate) && $fromDate === "" && isset($toDate) && !empty($toDate)) {
-            $query->where('date', '<=', $toDate);
-        }
-
-        if (isset($contents) && !empty($contents)) {
-            $query->where('contents', 'like', '%' . $contents . '%');
-        }
+//        if (isset($id) && !empty($id)) $query->where('id', $id);
+//
+//        if (isset($fromDate) && !empty($fromDate) && isset($toDate) && !empty($toDate)) {
+//            $query->whereBetween('date', [$fromDate, $toDate]);
+//        }
+//        if (isset($fromDate) && !empty($fromDate) && empty($toDate) && $toDate === "") {
+//            $query->where('date', '>=', $fromDate);
+//        }
+//        if (empty($fromDate) && $fromDate === "" && isset($toDate) && !empty($toDate)) {
+//            $query->where('date', '<=', $toDate);
+//        }
+//
+//        if (isset($contents) && !empty($contents)) {
+//            $query->where('contents', 'like', '%' . $contents . '%');
+//        }
 
         // dd($query->toSql());
         // $result = $query->get();
-        $data['result'] = $query->paginate(5);
-        if ($data['result']->count() <= 0) return;
+//        $data['result'] = $query->paginate(5);
+//        if ($data['result']->count() <= 0) return;
+//
+//        $data['pager-params'] = array(
+//            'id' => $id,
+//            'from-date' => $fromDate,
+//            'to-date' => $toDate,
+//            'contents' => $contents
+//        );
 
-        $data['pager-params'] = array(
-            'id' => $id,
-            'from-date' => $fromDate,
-            'to-date' => $toDate,
-            'contents' => $contents
-        );
+        $data = $query->SearchDailyReport::WhereSearchId($id)->WhereSearchBetweenFromDateToDate($fromDate, $toDate)->WhereSearchFromDate($fromDate, $toDate)->WhereSearchToDate($fromDate, $toDate)->WhereSearchContents($contents)->get();
+
         return $data;
     }
 
