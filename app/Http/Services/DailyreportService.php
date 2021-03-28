@@ -3,12 +3,11 @@
 namespace App\Http\Services;
 
 use App\Dailyreport;
+use App\Models\SearchDailyReport;
 use App\Http\Requests\DailyreportValidate;
 
 //use http\Env\Request;
 use Illuminate\Http\Request;
-
-use App\Models\SearchDailyReport;
 
 class DailyreportService
 {
@@ -63,7 +62,7 @@ class DailyreportService
 //            'contents' => $contents
 //        );
 
-        $data = $query->SearchDailyReport::WhereSearchId($id)->WhereSearchBetweenFromDateToDate($fromDate, $toDate)->WhereSearchFromDate($fromDate, $toDate)->WhereSearchToDate($fromDate, $toDate)->WhereSearchContents($contents)->get();
+        $data = $query->SearchDailyreport::WhereSearchId($id)->WhereSearchBetweenFromDateToDate($fromDate, $toDate)->WhereSearchFromDate($fromDate, $toDate)->WhereSearchToDate($fromDate, $toDate)->WhereSearchContents($contents)->get();
 
         return $data;
     }

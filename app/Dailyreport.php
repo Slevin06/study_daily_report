@@ -11,4 +11,5 @@ class Dailyreport extends Model
         'date',
         'contents',
     ];
+
 }

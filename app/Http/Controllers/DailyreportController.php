@@ -7,6 +7,7 @@ use App\Http\Services\DailyreportService;
 use Illuminate\Http\Request;
 use App\Http\Requests\DailyreportValidate;
 use App\Http\Requests\SearchDailyreportVal;
+use App\Models\SearchDailyReport;
 
 class DailyreportController extends Controller
 {
